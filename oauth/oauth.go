@@ -5,7 +5,6 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"net/url"
 )
@@ -52,7 +51,6 @@ func AccessToken(cfg *Config, code string) (t *Oauth2AccessToken, err error) {
 	if err != nil {
 		return
 	}
-	log.Print("获取微信网页授权Token响应JSON报文：" + string(bytes))
 	err = json.Unmarshal(bytes, &t)
 	if err != nil {
 		return
@@ -88,7 +86,6 @@ func RefreshToken(cfg *Config, refreshToken string) (t *Oauth2AccessToken, err e
 	if err != nil {
 		return
 	}
-	log.Print("刷新微信网页授权Token响应JSON报文：" + string(bytes))
 	err = json.Unmarshal(bytes, &t)
 	if err != nil {
 		return
@@ -138,7 +135,6 @@ func UserInfo(cfg *Config, accessToken string, openid string) (t *Oauth2UserInfo
 		return
 	}
 	bytes, err := ioutil.ReadAll(resp.Body)
-	log.Print("获取微信用户信息响应JSON报文：" + string(bytes))
 	if err != nil {
 		return
 	}
