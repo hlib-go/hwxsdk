@@ -47,7 +47,7 @@ func WxGet(c *Config, path string) (rb []byte, err error) {
 	var (
 		wlog    = log.WithField("requestId", Rand32())
 		begTime = time.Now().UnixNano()
-		url     = c.ServiceUrl + path
+		url     = c.GetServiceUrl() + path
 	)
 	defer func() {
 		wlog.Info("微信请求URL: ", url)
@@ -91,7 +91,7 @@ func WxPost(c *Config, path string, bm interface{}) (rb []byte, err error) {
 	var (
 		wlog    = log.WithField("requestId", Rand32())
 		begTime = time.Now().UnixNano()
-		url     = c.ServiceUrl + path
+		url     = c.GetServiceUrl() + path
 		reqBody = string(reqBytes)
 	)
 	defer func() {
@@ -102,7 +102,7 @@ func WxPost(c *Config, path string, bm interface{}) (rb []byte, err error) {
 			wlog.Warn("微信响应错误:", err.Error())
 		}
 	}()
-	resp, err := http.Post(c.ServiceUrl+path, "application/json; charset=UTF-8", strings.NewReader(reqBody))
+	resp, err := http.Post(url, "application/json; charset=UTF-8", strings.NewReader(reqBody))
 	if err != nil {
 		return
 	}
