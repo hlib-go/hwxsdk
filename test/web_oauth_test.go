@@ -12,26 +12,18 @@ import (
 // https://msd.himkt.cn/work/hwwxsdk/oauth/base
 // https://msd.himkt.cn/work/hwwxsdk/oauth/userinfo
 func TestWebOauth(t *testing.T) {
-	appid := "wx239c521c61221a8a"
-	secret := "******"
-
-	cfg := &hwxsdk.Config{
-		ServiceUrl: "",
-		Appid:      appid,
-		Secret:     secret,
-	}
-
+	redirectUriBase := "https://msd.himkt.cn/work"
 	redirectUriPath := "/hwxsdk/oauth/cburl"
 
 	// 跳转微信授权 SNSAPI_BASE
 	http.HandleFunc("/hwwxsdk/oauth/base", func(writer http.ResponseWriter, request *http.Request) {
-		url := hwxsdk.Oauth2Url(cfg, hwxsdk.SNSAPI_BASE, "snsapi_base", redirectUriPath)
+		url := hwxsdk.Oauth2Url(cfg, hwxsdk.SNSAPI_BASE, "snsapi_base", redirectUriBase+redirectUriPath)
 		writer.Header().Set("Location", url)
 		writer.WriteHeader(302)
 	})
 	// 跳转微信授权 SNSAPI_USERINFO
 	http.HandleFunc("/hwwxsdk/oauth/userinfo", func(writer http.ResponseWriter, request *http.Request) {
-		url := hwxsdk.Oauth2Url(cfg, hwxsdk.SNSAPI_USERINFO, "snsapi_userinfo", redirectUriPath)
+		url := hwxsdk.Oauth2Url(cfg, hwxsdk.SNSAPI_USERINFO, "snsapi_userinfo", redirectUriBase+redirectUriPath)
 		writer.Header().Set("Location", url)
 		writer.WriteHeader(302)
 	})
