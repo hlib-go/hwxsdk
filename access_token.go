@@ -4,7 +4,7 @@ import "fmt"
 
 // https请求方式: GET https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET
 func WxAccessToken(cfg *Config) (token *AccessToken, err error) {
-	path := fmt.Sprintf("/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s", cfg.AppId, cfg.AppSecret)
+	path := fmt.Sprintf("/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s", cfg.Appid, cfg.Secret)
 	err = WxGetUnmarshal(cfg, path, &token)
 	if err != nil {
 		return

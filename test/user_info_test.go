@@ -7,8 +7,8 @@ import (
 )
 
 func TestUserInfo(t *testing.T) {
-	cfg.AccessToken = GetAccessToken(cfg)
-	user, err := hwxsdk.WxUserInfo(cfg, "")
+	var accessToken = GetAccessToken(cfg)
+	user, err := hwxsdk.WxUserInfo(cfg, "", accessToken)
 	if err != nil {
 		t.Error(err)
 		return

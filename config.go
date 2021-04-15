@@ -1,10 +1,10 @@
 package hwxsdk
 
+// 微信公众号配置信息
 type Config struct {
-	ServiceUrl  string
-	AppId       string
-	AppSecret   string
-	AccessToken string
+	ServiceUrl string `json:"serviceUrl" bson:"serviceUrl"`
+	Appid      string `json:"appid" bson:"appid"`
+	Secret     string `json:"secret" bson:"secret"`
 }
 
 func (c *Config) GetServiceUrl() string {

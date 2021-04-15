@@ -5,9 +5,9 @@ import (
 )
 
 // 用户管理：获取用户基本信息 https://developers.weixin.qq.com/doc/offiaccount/User_Management/Get_users_basic_information_UnionID.html#UinonId
-func WxUserInfo(c *Config, openid string) (user *UserInfo, err error) {
+func WxUserInfo(c *Config, openid, accessToken string) (user *UserInfo, err error) {
 	// GET /cgi-bin/user/info?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN
-	path := fmt.Sprintf("/cgi-bin/user/info?access_token=%s&openid=%s&lang=zh_CN", c.AccessToken, openid)
+	path := fmt.Sprintf("/cgi-bin/user/info?access_token=%s&openid=%s&lang=zh_CN", accessToken, openid)
 	err = WxGetUnmarshal(c, path, &user)
 	if err != nil {
 		return
