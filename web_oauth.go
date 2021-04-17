@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"strconv"
 )
 
 type ScopeType string
@@ -67,7 +68,7 @@ func Oauth2AccessToken(cfg *Config, code string) (t *WebAccessToken, err error) 
 		return
 	}
 	if e != nil {
-		err = errors.New(string(e.Errcode) + ":" + e.Errmsg)
+		err = errors.New(strconv.FormatInt(e.Errcode, 10) + ":" + e.Errmsg)
 		return
 	}
 	if e == nil {
