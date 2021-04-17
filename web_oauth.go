@@ -43,6 +43,7 @@ type Oauth2Error struct {
 // 微信网页授权是通过OAuth2.0机制实现的，在用户授权给公众号后，公众号可以获取到一个网页授权特有的接口调用凭证（网页授权access_token），通过网页授权access_token可以进行授权后接口调用，如获取用户基本信息；
 func Oauth2AccessToken(cfg *Config, code string) (t *WebAccessToken, err error) {
 	url := fmt.Sprintf("%s/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code", cfg.GetServiceUrl(), cfg.Appid, cfg.Secret, code)
+	log.Info("Oauth2AccessToken 请求URL：" + url)
 	resp, err := http.Get(url)
 	if err != nil {
 		return
@@ -51,11 +52,12 @@ func Oauth2AccessToken(cfg *Config, code string) (t *WebAccessToken, err error) 
 	if err != nil {
 		return
 	}
+	log.Info("Oauth2AccessToken 响应报文：" + string(bytes))
 	err = json.Unmarshal(bytes, &t)
 	if err != nil {
 		return
 	}
-	if t != nil {
+	if t != nil && t.Openid != "" {
 		return
 	}
 
